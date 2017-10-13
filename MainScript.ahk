@@ -1,9 +1,3 @@
-; -----------------------------
-; Robin Lu's Auto Hotkey Script
-; Use at own risk
-; -----------------------------
-; For HOME usage 
-;
 ;==============================================================================
 ;                               Global Directives
 ;==============================================================================
@@ -26,7 +20,7 @@ SendMode Input
 Return
 
 ; Media Controls
-; Note: double binding of reverse
+; Note some binding of combo AND its inverse for Mute and Play/pause
 AppsKey & Down::
 	Send, {Volume_Down}
 	Send, {Volume_Down}
@@ -57,6 +51,15 @@ RShift & AppsKey::
 	Send, {Media_Play_Pause}
 Return
 
+; Mouse wheel Tilt => Tab switch
+WheelLeft::
+    Send, {LCtrl down}{LShift down}{Tab}{LShift up}{LCtrl up}
+Return
+
+WheelRight::
+    Send, {LCtrl down}{Tab}{LCtrl up}
+Return
+
 ;==============================================================================
 ;                                    Launchy
 ;==============================================================================
@@ -82,6 +85,7 @@ Return
 ;==============================================================================
 
 ; Runescape
+; Enables middle wheel zoom without need to hold down CTRL
 ; #IfWinActive ahk_class SunAwtFrame
 ; 
 ;     PgUp::
@@ -131,20 +135,21 @@ Return
 ; #IfWinActive
 
 ; Visual Studio
-#IfWinActive Visual ahk_exe devenv.exe
+; Ghetto middle click => Goto definition (Just use extension instead)
+; #IfWinActive Visual ahk_exe devenv.exe
+;     *MButton:: 
+;     MouseGetPos, posX, posY ; Get mouse position
+;     if (posY >= 110) { ; Mouse is not in Text Editor (Hard coded pos)
+;         Send {Ctrl down}{Alt down}{Click}{Alt up}{Ctrl up}
+;     } else {
+;         Send {Click middle}
+;     }
+;     Return
 
-    *MButton:: 
-    MouseGetPos, posX, posY ; Get mouse position
-    if (posY >= 110) { ; Mouse is not in Text Editor (Hard coded pos)
-        Send {Ctrl down}{Alt down}{Click}{Alt up}{Ctrl up}
-    } else {
-        Send {Click middle}
-    }
-    Return
-
-#IfWinActive
+; #IfWinActive
 
 ; Photos
+; Better navigation for windows photos
 #IfWinActive, Photos
 
     ^w::
